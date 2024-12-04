@@ -1,0 +1,100 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #1e1e1e;
+}
+
+html,
+body,
+#parallax-container {
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.parallax-layer {
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+#snowflakes {
+  position: absolute;
+  overflow: hidden;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.snowflake {
+  position: absolute;
+  background-color: transparent;
+
+  --snowflake-slope: 0.5;
+  --snowflake-padding: 20px;
+  --snowflake-start-x: calc(max(0px, -1 * var(--snowflake-intercept) / var(--snowflake-slope)) - var(--snowflake-padding));
+  --snowflake-start-y: calc(max(0px, var(--snowflake-intercept)) - var(--snowflake-padding));
+  --snowflake-end-x: calc(min(100vw, (100vh - var(--snowflake-intercept)) / var(--snowflake-slope)));
+  --snowflake-end-y: calc(min(100vh, var(--snowflake-slope) * 100vw + var(--snowflake-intercept)));
+
+  --snowflake-hypot: calc(hypot(var(--snowflake-end-x) - var(--snowflake-start-x),
+        var(--snowflake-end-y) - var(--snowflake-start-y)));
+
+  /* To allow js to read the computed value of --snowflake-hypot */
+  max-width: var(--snowflake-hypot);
+
+  transform: translate(var(--snowflake-start-x), var(--snowflake-start-y));
+  animation: fall linear infinite;
+  will-change: transform;
+}
+
+@keyframes fall {
+  to {
+    transform: translate(var(--snowflake-end-x), var(--snowflake-end-y));
+  }
+}
+
+@property --snowflake-slope {
+  inherits: false;
+  syntax: "<number>";
+}
+
+@property --snowflake-padding {
+  inherits: false;
+  syntax: "<length-percentage>";
+}
+
+@property --snowflake-intercept {
+  inherits: false;
+  syntax: "<length-percentage>";
+}
+
+/* So that js can read the computed hypot */
+@property --snowflake-hypot {
+  inherits: false;
+  syntax: "<length-percentage>";
+}
+
+@property --snowflake-start-x {
+  inherits: false;
+  syntax: "<length-percentage>";
+}
+
+@property --snowflake-start-y {
+  inherits: false;
+  syntax: "<length-percentage>";
+}
+
+@property --snowflake-end-x {
+  inherits: false;
+  syntax: "<length-percentage>";
+}
+
+@property --snowflake-end-y {
+  inherits: false;
+  syntax: "<length-percentage>";
+}
