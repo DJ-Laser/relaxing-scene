@@ -1,4 +1,6 @@
-const parallaxContainer = document.getElementById("parallax-container");
+const mountain = document.getElementById("mountain").parentElement;
+const slope = document.getElementById("slope").parentElement;
+const lift = document.getElementById("lift").parentElement;
 const snowflakeContainer = document.getElementById("snowflakes");
 const snowflakeTemplate = document.getElementById("snowflake-template");
 
@@ -13,7 +15,7 @@ function makeSnowflakes(numSnowflakes) {
     const clone = snowflakeTemplate.content.cloneNode(true);
     const snowflake = clone.querySelector("img");
 
-    const size = `${random(8, 12)}px`;
+    const size = `${random(12, 16)}px`;
     snowflake.style.width = size;
     snowflake.style.height = size;
     snowflake.style.opacity = random(0.7, 0.9);
@@ -49,3 +51,17 @@ updateSnowflakes(snowflakes);
 window.addEventListener('resize', function () {
   updateSnowflakes(snowflakes);
 });
+
+document.addEventListener('mousemove', (e) => {
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
+
+  // -1, 1 range
+  const offsetX = (e.clientX - centerX) / centerX;
+  const offsetY = (e.clientY - centerY) / centerY;
+
+  mountain.style.transform = `translate(${offsetX * 50}px, ${offsetY * 50}px)`;
+  lift.style.transform = `translate(${offsetX * 10}px, ${offsetY * 10}px)`;
+  slope.style.transform = `translate(${offsetX * 130}px, ${offsetY * 130}px)`;
+});
+
